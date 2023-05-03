@@ -25,9 +25,9 @@ with open('data/lichess_db_standard_rated_2014-12.pgn') as f:
             if result == "1-0":
                 result = 1
             elif result == "1/2-1/2":
-                result = 0
+                result = 0.5
             elif result == "0-1":
-                result = -1
+                result = 0
             else:
                 raise NotImplementedError
             result_list.append(result)
@@ -43,6 +43,6 @@ with open('data/lichess_db_standard_rated_2014-12.pgn') as f:
         "result": result_list
     }
     df = pd.DataFrame(data)
-    df.to_csv('data/lichess_db_standard_rated_2014-12.csv')
+    df.to_csv('data/lichess_db_standard_rated_2014-12.csv', index=False)
 
     print("Progress Finished")
