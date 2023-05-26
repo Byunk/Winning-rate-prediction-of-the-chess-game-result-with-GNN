@@ -4,14 +4,18 @@ class ELO:
 	K_FACTOR = 32 # 16 for masters and 32 for weaker players
 	INIT_RATE = 1500
 
-	def __init__(self):
-		self.df = pd.read_csv("data/lichess_db_standard_rated_2014-12.csv")
+	def __init__(self, data_dir):
+		self.df = pd.read_csv(data_dir)
 		self.elo = {}
 
-	def train(self):
-		for row in self.df.itertuples():
+	def train(self, test_edge_index):
+		for i,row in enumerate(self.df.itertuples()):
+			if i%1000==0:
+				print(f"test {i}")
 			white = row[1]
 			black = row[2]
+			if [white, black] in test_edge_index.tolist():
+				continue
 			result = float(row[3])
 
 			if white in self.elo:
@@ -32,14 +36,18 @@ class ELO:
 			self.elo[white] = white_rate + self.K_FACTOR * (result - E_A)
 			self.elo[black] = black_rate + self.K_FACTOR * (1 - result - E_B)
 
-	def predict(self, white, black):
-		if white not in self.elo or black not in self.elo:
-			raise
+	def predict(self, test_edge_index):
+		outputs=[]
+		for i, [white, black] in enumerate(test_edge_index.tolist()):
+			if i%1000==0:
+				print(f"test {i}")
+			if white not in self.elo or black not in self.elo:
+				raise
+			white_rate = self.elo[white]
+			black_rate = self.elo[black]
 
-		white_rate = self.elo[white]
-		black_rate = self.elo[black]
-
-		Q_A = 10 ** (white_rate / 400)
-		Q_B = 10 ** (black_rate / 400)
-		E_A = Q_A / (Q_A + Q_B)
-		return E_A, 1 - E_A
+			Q_A = 10 ** (white_rate / 400)
+			Q_B = 10 ** (black_rate / 400)
+			E_A = Q_A / (Q_A + Q_B)
+			outputs.append([E_A, 0, 1 - E_A])
+		return outputs
