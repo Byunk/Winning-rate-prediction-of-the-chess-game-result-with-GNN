@@ -3,6 +3,7 @@ import torch.nn.functional as F
 from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
+import pandas as pd
 
 from DataModule import GraphDataModule, ChessData
 from Model import ELO, ChessModel
@@ -81,11 +82,14 @@ class ChessPredictor:
         self.trainer.predict(self.chessModel, self.test_dataloader)
 
     def train_elo(self):
-        self.elo = ELO(self.chessData.csv_dir, self.test_edge_index)
+        test_edge_index = pd.DataFrame(
+            self.test_edge_index.numpy(), columns=["white", "black"]
+        )
+        self.elo = ELO(self.chessData.csv_dir, test_edge_index)
         self.elo.train()
 
     def predict_elo(self):
-        outputs = self.elo.predict(self.test_edge_index)
+        outputs = self.elo.predict()
         loss = F.mse_loss(outputs, self.test_edge_attr)
         print(loss)
 
