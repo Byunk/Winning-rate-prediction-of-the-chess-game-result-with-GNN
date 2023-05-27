@@ -2,7 +2,10 @@
 data/
 lightning_logs/
 tb_logs/
+logs/
 __pycache__/
+ipynb/
+config/
 
 .vscode/launch.json
 nohup.out
