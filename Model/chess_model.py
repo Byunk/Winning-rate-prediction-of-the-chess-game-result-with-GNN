@@ -4,8 +4,8 @@ import torch.nn.functional as F
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import pytorch_lightning as pl
-from encoder import Encoder
-from decoder import Decoder
+from .encoder import Encoder
+from .decoder import Decoder
 
 
 class ChessModel(pl.LightningModule):
@@ -22,7 +22,9 @@ class ChessModel(pl.LightningModule):
         super().__init__()
         self.edge_index_doubled = edge_index_doubled.to(self.device)
         self.edge_attr_doubled = edge_attr_doubled.to(self.device)
-        self.save_hyperparameters("learning_rate")
+        self.save_hyperparameters(
+            "node_feature_dim", "num_layers", "heads", "learning_rate"
+        )
 
         # init layers
         self.Encoder = Encoder(
