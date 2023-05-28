@@ -1,21 +1,23 @@
 # Winning rate prediction of the chess game result with GNN
 
-- [Winning rate prediction of the chess game result with GNN](#winning-rate-prediction-of-the-chess-game-result-with-gnn)
-  - [Problem Statement](#problem-statement)
-  - [How to Run](#how-to-run)
-    - [Setup](#setup)
-    - [Train GNN Model \& Predict](#train-gnn-model--predict)
-    - [Train ELO Model \& Predict](#train-elo-model--predict)
-  - [Methodology](#methodology)
-    - [Graph Structure](#graph-structure)
-    - [Model Architecture](#model-architecture)
-      - [Encoder](#encoder)
-      - [Decoder](#decoder)
-    - [Evaluation](#evaluation)
-  - [Result](#result)
-  - [Future Works](#future-works)
-  - [Reference](#reference)
-  - [Contributors](#contributors)
+-   [Winning rate prediction of the chess game result with GNN](#winning-rate-prediction-of-the-chess-game-result-with-gnn)
+    -   [Problem Statement](#problem-statement)
+    -   [How to Run](#how-to-run)
+        -   [Setup](#setup)
+        -   [Train GNN Model \& Predict](#train-gnn-model--predict)
+        -   [Train ELO Model \& Predict](#train-elo-model--predict)
+    -   [Methodology](#methodology)
+        -   [Graph Structure](#graph-structure)
+        -   [Model Architecture](#model-architecture)
+            -   [Encoder](#encoder)
+            -   [Decoder](#decoder)
+        -   [Evaluation](#evaluation)
+    -   [Result](#result)
+    -   [Future Works](#future-works)
+        -   [Node feature initilization](#node-feature-initilization)
+        -   [Boosting capacity of the model](#boosting-capacity-of-the-model)
+    -   [Reference](#reference)
+    -   [Contributors](#contributors)
 
 ## Problem Statement
 
@@ -59,29 +61,38 @@ python main.py --method elo
 
 ### Graph Structure
 
-<img width="576" alt="image" src="https://github.com/Byunk/Graph_based_Chess_result_prediction/assets/60650372/83dd2f3b-0100-4701-acd1-2ac9c9b5f10f">
+<img width="576" alt="image" src="assets/graph_structure.png">
 
 ### Model Architecture
 
-<img width="608" alt="image" src="https://github.com/Byunk/Graph_based_Chess_result_prediction/assets/60650372/85e15afc-299b-49e2-8cdc-97fb1e91b8ee">
+<img width="608" alt="image" src="assets/model_architecture.png">
 
-#### Encoder 
+#### Encoder
 
-<img width="567" alt="image" src="https://github.com/Byunk/Graph_based_Chess_result_prediction/assets/60650372/ada9c475-c98b-4438-b272-9bfba6fdcd2c">
+<img width="567" alt="image" src="assets/encoder.png">
 
 #### Decoder
 
-<img width="572" alt="image" src="https://github.com/Byunk/Graph_based_Chess_result_prediction/assets/60650372/fe6463f2-24bb-4ed0-8e02-d5359442fcba">
+<img width="572" alt="image" src="assets/decoder.png">
 
 ### Evaluation
 
-<img width="576" alt="image" src="https://github.com/Byunk/Graph_based_Chess_result_prediction/assets/60650372/adb63c33-5718-4629-a4d2-2556122bb604">
+<img width="576" alt="image" src="assets/evaluation.png">
 
 ## Result
 
 ## Future Works
 
-<img width="576" alt="image" src="https://github.com/Byunk/Graph_based_Chess_result_prediction/assets/60650372/1579e9e3-81cb-407f-87f7-32e1f13c26c1">
+### Node feature initilization
+
+1. For now, node features are initialized randomly
+2. ELO value itself captures individual chess player's skill, which might be good initial point
+
+### Boosting capacity of the model
+
+1. Our model converges on high training error
+2. Generalization error is relatively smaller than training erroor
+3. Boosting capacity of the model will work well for both encoder and decoder
 
 ## Reference
 
@@ -92,4 +103,3 @@ python main.py --method elo
 [Dongwook Shin](https://github.com/jentleshin)
 
 [Kyungho Byoun](https://github.com/byunk)
-
