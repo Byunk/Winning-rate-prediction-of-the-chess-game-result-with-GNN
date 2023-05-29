@@ -4,7 +4,8 @@
     -   [Problem Statement](#problem-statement)
     -   [How to Run](#how-to-run)
         -   [Setup](#setup)
-        -   [Train GNN Model \& Predict](#train-gnn-model--predict)
+        -   [Train GNN Model](#train-gnn-model)
+        -   [Predict with GNN Model](#predict-with-gnn-model)
         -   [Train ELO Model \& Predict](#train-elo-model--predict)
     -   [Methodology](#methodology)
         -   [Graph Structure](#graph-structure)
@@ -15,6 +16,7 @@
     -   [Result](#result)
     -   [Future Works](#future-works)
         -   [Node feature initilization](#node-feature-initilization)
+        -   [Using the information of match order](#using-the-information-of-match-order)
         -   [Boosting capacity of the model](#boosting-capacity-of-the-model)
     -   [Reference](#reference)
     -   [Contributors](#contributors)
@@ -86,6 +88,15 @@ python main.py --method elo
 ## Result
 
 <img width="576" alt="image" src="assets/result.png">
+
+|                       Model                       |             Evaluation Result             |
+| :-----------------------------------------------: | :---------------------------------------: |
+| GATv2 (node feature dim: 10, heads: 3, layers: 2) |                  0.1624                   |
+| GATv2 (node feature dim: 32, heads: 4, layers: 2) |                  0.1625                   |
+| GATv2 (node feature dim: 32, heads: 3, layers: 3) |                  0.1616                   |
+| GATv2 (node feature dim: 32, heads: 3, layers: 2) |                  0.1612                   |
+| GATv2 (node feature dim: 32, heads: 2, layers: 4) | **<span style="color:red">0.1595</span>** |
+|                **ELO (Baseline)**                 | **<span style="color:red">0.1461</span>** |
 
 ## Future Works
 
