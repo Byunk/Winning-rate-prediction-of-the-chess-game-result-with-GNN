@@ -89,14 +89,14 @@ python main.py --method elo
 
 <img width="576" alt="image" src="assets/result.png">
 
-|                       Model                       |             Evaluation Result             |
-| :-----------------------------------------------: | :---------------------------------------: |
-| GATv2 (node feature dim: 10, heads: 3, layers: 2) |                  0.1624                   |
-| GATv2 (node feature dim: 32, heads: 4, layers: 2) |                  0.1625                   |
-| GATv2 (node feature dim: 32, heads: 3, layers: 3) |                  0.1616                   |
-| GATv2 (node feature dim: 32, heads: 3, layers: 2) |                  0.1612                   |
-| GATv2 (node feature dim: 32, heads: 2, layers: 4) | **<span style="color:red">0.1595</span>** |
-|                **ELO (Baseline)**                 | **<span style="color:red">0.1461</span>** |
+|                           Model                            |             Evaluation Result             |
+| :--------------------------------------------------------: | :---------------------------------------: |
+|     GATv2 (node feature dim: 10, heads: 3, layers: 2)      |                  0.1624                   |
+|     GATv2 (node feature dim: 32, heads: 4, layers: 2)      |                  0.1625                   |
+|     GATv2 (node feature dim: 32, heads: 3, layers: 3)      |                  0.1616                   |
+| GATv2 (node feature dim: 32, heads: 3, layers: 2, softmax) |                  0.1612                   |
+|     GATv2 (node feature dim: 32, heads: 2, layers: 4)      | **<span style="color:red">0.1595</span>** |
+|                     **ELO (Baseline)**                     | **<span style="color:red">0.1461</span>** |
 
 ## Future Works
 
