@@ -28,10 +28,8 @@ Therefore, we propose a GATv2-based GNN model to utilize the structural informat
 Our brief solution is as below
 
 1. Construct the graph, players as nodes, game results as edges
-2. Randomly initilize node features
-3. Update node features with GNN
-4. Randomly select edges, and calculate the loss with real game results
-5. Predict unseen game results with trained node features
+2. Node features denote the multi-dimensional representation of a user's ability
+3. Predict unseen game results with trained node features
 
 ## How to Run
 
@@ -45,10 +43,16 @@ Our brief solution is as below
 pip install -r requirements.txt
 ```
 
-### Train GNN Model & Predict
+### Train GNN Model
 
 ```sh
 python main.py --method gnn
+```
+
+### Predict with GNN Model
+
+```sh
+python main.py --method gnn -t
 ```
 
 ### Train ELO Model & Predict
@@ -81,12 +85,20 @@ python main.py --method elo
 
 ## Result
 
+<img width="576" alt="image" src="assets/result.png">
+
 ## Future Works
 
 ### Node feature initilization
 
 1. For now, node features are initialized randomly
 2. ELO value itself captures individual chess player's skill, which might be good initial point
+
+### Using the information of match order
+
+1. For now, we collapse every matches between players into 2 edge features (W-B, B-W)
+2. In Elo, however, it calculates the stat with respect to the order of the matches
+3. Introducing, the information about match order might help our model generalized better
 
 ### Boosting capacity of the model
 

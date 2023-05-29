@@ -79,7 +79,29 @@ class ChessPredictor:
         self.trainer.fit(self.chessModel, self.train_dataloader, self.val_dataloader)
 
     def predict_gnn(self):
-        self.trainer.predict(self.chessModel, self.test_dataloader)
+        print("start testing...")
+        logger = TensorBoardLogger(LOG_DIR, name="node_feature_dim:32")
+        callbacks = [
+            ModelCheckpoint(monitor="val_loss", mode="min"),
+            EarlyStopping(monitor="val_loss", mode="min", patience=3),
+        ]
+
+        trainer = Trainer(
+            logger=logger, callbacks=callbacks, val_check_interval=0.1, max_epochs=1000
+        )
+
+        model = ChessModel.load_from_checkpoint(
+            "logs/node_feature_dim:32/version_4/checkpoints/epoch=4-step=119841.ckpt",
+            node_feature_dim=32,
+            num_layers=3,
+            heads=3,
+            num_node=self.num_node,
+            edge_index_doubled=self.edge_index_doubled,
+            edge_attr_doubled=self.edge_attr_doubled,
+        )
+        model.eval()
+
+        trainer.predict(model, self.test_dataloader)
 
     def train_elo(self):
         test_edge_index = pd.DataFrame(
@@ -111,6 +133,7 @@ def main():
         type=str,
         help="Method: gnn or elo",
     )
+    parser.add_argument("-t", action="store_true")
     parser.add_argument(
         "-d",
         "--dir",
@@ -126,8 +149,10 @@ def main():
     chess.preprocess()
 
     if args.method == "gnn":
-        chess.train_gnn()
-        chess.predict_gnn()
+        if args.t == False:
+            chess.train_gnn()
+        else:
+            chess.predict_gnn()
     elif args.method == "elo":
         chess.train_elo()
         chess.predict_elo()
