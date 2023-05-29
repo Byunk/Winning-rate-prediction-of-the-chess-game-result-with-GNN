@@ -9,9 +9,13 @@ class Decoder(nn.Module):
         self.Fc1 = nn.Linear(in_channels, hidden1, bias=False)
         self.Fc2 = nn.Linear(hidden1, hidden2, bias=False)
         self.Fc3 = nn.Linear(hidden2, out_channels, bias=False)
+        ###
+        self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
         h = F.relu(self.Fc1(x))
         h = F.relu(self.Fc2(h))
         output = self.Fc3(h)
+        ###
+        output = self.softmax(output)
         return output
